@@ -1,0 +1,650 @@
+<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title id="filename">Quark</title>
+</head>
+<script src="./libs/sigma.core.js"></script>
+<script src="./libs/conrad.js"></script>
+<script src="./libs/sigma.utils.js"></script>
+<script src="./libs/sigma.polyfills.js"></script>
+<script src="./libs/sigma.settings.js"></script>
+<script src="./libs/sigma.classes.dispatcher.js"></script>
+<script src="./libs/sigma.classes.configurable.js"></script>
+<script src="./libs/sigma.classes.graph.js"></script>
+<script src="./libs/sigma.classes.camera.js"></script>
+<script src="./libs/sigma.classes.quad.js"></script>
+<script src="./libs/sigma.captors.mouse.js"></script>
+<script src="./libs/sigma.captors.touch.js"></script>
+<script src="./libs/sigma.renderers.canvas.js"></script>
+<script src="./libs/sigma.renderers.webgl.js"></script>
+<script src="./libs/sigma.renderers.svg.js"></script>
+<script src="./libs/sigma.renderers.def.js"></script>
+<script src="./libs/sigma.webgl.nodes.def.js"></script>
+<script src="./libs/sigma.webgl.nodes.fast.js"></script>
+<script src="./libs/sigma.webgl.edges.def.js"></script>
+<script src="./libs/sigma.webgl.edges.fast.js"></script>
+<script src="./libs/sigma.webgl.edges.arrow.js"></script>
+<script src="./libs/sigma.canvas.labels.def.js"></script>
+<script src="./libs/sigma.canvas.hovers.def.js"></script>
+<script src="./libs/sigma.canvas.nodes.def.js"></script>
+<script src="./libs/sigma.canvas.edges.def.js"></script>
+<script src="./libs/sigma.canvas.edges.curve.js"></script>
+<script src="./libs/sigma.canvas.edges.arrow.js"></script>
+<script src="./libs/sigma.canvas.edges.curvedArrow.js"></script>
+<script src="./libs/sigma.canvas.edgehovers.def.js"></script>
+<script src="./libs/sigma.canvas.edgehovers.curve.js"></script>
+<script src="./libs/sigma.canvas.edgehovers.arrow.js"></script>
+<script src="./libs/sigma.canvas.edgehovers.curvedArrow.js"></script>
+<script src="./libs/sigma.canvas.extremities.def.js"></script>
+<script src="./libs/sigma.middlewares.rescale.js"></script>
+<script src="./libs/sigma.middlewares.copy.js"></script>
+<script src="./libs/sigma.misc.animation.js"></script>
+<script src="./libs/sigma.misc.bindEvents.js"></script>
+<script src="./libs/sigma.misc.bindDOMEvents.js"></script>
+<script src="./libs/sigma.misc.drawHovers.js"></script>
+<!-- END SIGMA IMPORTS -->
+<script src="./libs/plugins/sigma.renderers.halo/settings.js"></script>
+<script src="./libs/plugins/sigma.renderers.halo/sigma.renderers.halo.js"></script>
+
+<script src="./libs/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+
+<script src="./libs/plugins/sigma.helpers.graph/sigma.helpers.graph.js"></script>
+<script src="./libs/plugins/sigma.plugins.keyboard/sigma.plugins.keyboard.js"></script>
+<script src="./libs/plugins/sigma.plugins.activeState/sigma.plugins.activeState.js"></script>
+<script src="./libs/plugins/sigma.plugins.select/sigma.plugins.select.js"></script>
+<script src="./libs/plugins/sigma.plugins.lasso/sigma.plugins.lasso.js"></script>
+
+<script src="./libs/plugins/sigma.renderers.linkurious/settings.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.labels.def.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.hovers.def.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.def.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.cross.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.diamond.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.equilateral.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.square.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.nodes.star.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.def.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.curve.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.arrow.js"></script>
+<script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+<script src="./libs/plugins/sigma.pathfinding.astar/sigma.pathfinding.astar.js"></script>
+<script src="./libs/plugins/sigma.renderers.halo/settings.js"></script>
+<script src="./libs/plugins/sigma.renderers.halo/sigma.renderers.halo.js"></script>
+<script src="./libs/plugins/sigma.plugins.animate/sigma.plugins.animate.js"></script>
+<script src="./libs/plugins/sigma.layout.forceLink/worker.js"></script>
+<script src="./libs/plugins/sigma.layout.forceLink/supervisor.js"></script>
+<script src="./libs/plugins/sigma.statistics.louvain/sigma.statistics.louvain.js"></script>
+<script id="ourfile" src="1P9e1P555Qj6BKRK4tmZqjAZsUxWMa4qUQ.js"></script>
+<div id="container">
+  <style>
+    #graph-container {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      position: absolute;
+      background-color: #2c3e50;
+    }
+    #holder {
+      padding: 15px 0px;
+    }
+    #control-panel {
+      position: absolute;
+      filter: drop-shadow(1px 1px 11px #c0392b);
+      top: 0px;
+      bottom: 0px;
+      right: 0px;
+      width: 160px;
+      background-color: #34495e;
+      overflow: auto;
+    }
+    .buttons {
+      color: white;
+      text-align: center;
+      font-family: sans-serif;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 10px;
+      cursor: pointer;
+    }
+    .glow {
+      color: white;
+      padding: 5px 5px;
+      text-align: center;
+      font-family: sans-serif;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+  .arrow {
+      position: relative;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      display: inline-block;
+      padding: 5px;
+      filter: drop-shadow(2px 2px 2px #c0392b);
+      transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
+  }
+  .toggle {
+  font-size: 10px;
+  font-family: sans-serif;
+  border:none;
+  display:inline-block;
+  padding:8px 8px;
+  vertical-align:middle;
+  overflow:hidden;
+  color: white;
+  text-align:center;
+  cursor:pointer;
+  white-space:nowrap;
+  background-color: #2ecc71;
+  }
+  .flexContainer {
+      display: flex;
+  }
+
+  .inputField {
+      flex: 1;
+  }
+  </style>
+<body>
+  <div id="graph-container"></div>
+  <i class="arrow" onclick="sidebarToggle();" style="z-index: 1; position: absolute; right: 0px; top: 0px;"></i>
+  <div id="control-panel">
+    <div id="holder">
+      <center>
+        <d3v class="glow" onclick="circle()">Circle</d3v>
+        <d3v class="glow" onclick="decolor()">Decolor</d3v>
+        <d3v class="glow" onclick="center()">Center</d3v>
+        <d3v class="glow" onclick="stabilize()">Stabilize</d3v>
+        <d3v class="glow" onclick="clean()">Clean</d3v>
+        <d3v class="glow" onclick="lassor()">Lasso</d3v>
+        <d3v class="glow" onclick="reloader();">Reload</d3v>
+        <select onchange="edgeType(this.value)">
+          <option value="line">Line</option>
+          <option value="curve">Curve</option>
+          <option value="arrow">Arrow</option>
+          <option value="curvedArrow">cArrow</option>
+        </select>
+        <hr />
+        <span onclick="toggleEdges(this)" class="glow" style="color: #2ecc71" id="edgeCounter">Edges: </span><br />
+        <span onclick="toggleNodes(this)" class="glow" style="color: #2ecc71" id="nodeCounter">Nodes: </span>
+        <span onclick="toggleEdgeLabels(this)" class="glow" style="color: #2ecc71" id="edgeCounter">Edge Lables</span><br />
+        <span onclick="toggleNodeLabels(this)" class="glow" style="color: #2ecc71" id="nodeCounter">Node Labels</span>
+        <div class="flexContainer">
+          <input class="inputField" type="text" size="5" id="search" value="">
+          <input type="button" style="color: white; border:1px solid #e74c3c; background-color: #e74c3c;" value="Find" onclick="finder(this.value);">
+        </div>
+        <hr />
+        <span class="glow" id="run-btn">Find Communities</span><br />
+        <select id="levels"><option disabled selected>Level</option></select><span class="glow" id="reset-btn">Reset</span>
+      </center>
+    </div>
+  </div>
+</div>
+<span style="visibility: hidden;" id="secret" value="50"></span>
+<script>
+function sidebarToggle() {
+    var x = document.getElementById("control-panel");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+
+<script>
+
+colors = [
+  "#D6C1B0",
+  "#9DDD5A",
+  "#D06D34",
+  "#D28FD8",
+  "#5D8556",
+  "#71D4C6",
+  "#CDCF79",
+  "#D8A836",
+  "#5E8084",
+  "#738ECD",
+  "#D36565",
+  "#61DC7B",
+  "#9B7168",
+  "#97C4DE",
+  "#A57E42",
+  "#D5DA41",
+  "#D06B97",
+  "#917097",
+  "#689534",
+  "#90D59B"
+];
+if(rendru) {
+  document.getElementById('filename').text = document.getElementById('ourfile').src.split('/').slice(-1)[0] + ' - Quark';
+}
+
+var rendri = rendru;
+preNodeId = '';
+prevNodeId = '';
+
+default_renderer = {
+      container: document.getElementById('graph-container'),
+      type: 'canvas'
+    }
+
+default_settings = {
+      minEdgeSize: 1,
+      maxEdgeSize: 10,
+      minNodeSize: 1,
+      maxNodeSize: 6,
+      nodeActiveBorderSize: 2,
+      nodeActiveOuterBorderSize: 3,
+      nodeHaloSize: 50,
+      animationsTime: 1000,
+      borderSize: 2,
+      outerBorderSize: 3,
+      edgeHoverSizeRatio: 1,
+      drawLabels: true,
+      drawEdgeLables: true,
+      edgeHoverExtremities: false,
+      drawEdges: true,
+      enableNodeHovering: true,
+      enableEdgeHovering: false,
+      drawEdgeLabels: false,
+      approximateLabelWidth: true,
+      edgeColor: 'default',
+      labelAlignment: 'top',
+      defaultLabelColor: '#e74c3c',
+      defaultEdgeColor: '#FFFFFF',
+      defaultEdgeType: 'line',
+      defaultNodeColor: '#e74c3c',
+      autoRescale: ['nodePosition'],
+      edgeHoverColor: '#2ecc71',
+      defaultEdgeHoverColor: '#2ecc71',
+      defaultNodeActiveBorderColor: '#fff',
+      defaultNodeActiveOuterBorderColor: 'rgb(236, 81, 72)',
+      nodeHaloColor: 'rgba(241, 196, 15, 0.2)'
+    }
+
+/*if (rendri.edges.length > 8000){
+  if (confirm('Number of edges is ' + rendri.edges.length + ' which may cause the canvas to lag.\nWould you like to use "webgl" instead?'));
+  defaults.type = 'webgl';
+}*/
+
+if (!('size' in rendri.nodes[0])){
+  default_settings.autoRescale.push('nodeSize');
+}
+
+function plotter() {
+  s = new sigma({
+    graph: rendri,
+    renderer: default_renderer,
+    settings: default_settings
+  });
+}
+plotter();
+
+function society(){
+  // Layout the graph to see node clusters:
+  var fa = sigma.layouts.configForceLink(s, {
+    worker: true,
+    autoStop: true,
+    background: true,
+    easing: 'cubicInOut'
+  });
+  sigma.layouts.startForceLink();
+  var louvainInstance;
+  // Detect button
+  document.getElementById('run-btn').addEventListener("click", function(e) {
+    // Detect communities using the Louvain algorithm:
+    louvainInstance = sigma.plugins.louvain(s.graph, {
+      setter: function(communityId) { this.my_community = communityId; }
+    });
+    var nbLevels = louvainInstance.countLevels();
+    var partitions = louvainInstance.getPartitions();
+    // Color nodes based on their community
+    s.graph.nodes().forEach(function(node) {
+      node.color = colors[node.my_community];
+    });
+    s.refresh({skipIndexation: true});
+    // Fill level selector
+    var levelElt = document.getElementById('levels');
+    levelElt.innerHTML = '<option disabled selected>Level</option>';
+    for (var i = 0; i < nbLevels; i++) {
+      var optionElt = document.createElement("option");
+      optionElt.text = i + 1;
+      if (i === nbLevels - 1) {
+        optionElt.selected = true;
+      }
+      levelElt.add(optionElt);
+    }
+    levelElt.addEventListener("change", function(e) {
+      var level = +e.target[e.target.selectedIndex].value;
+      louvainInstance.setResults({level: level});
+      // Partition count
+      partitions = louvainInstance.getPartitions(level);
+      // Color nodes based on their community
+      s.graph.nodes().forEach(function(node) {
+        node.color = colors[node.my_community];
+      });
+      s.refresh({skipIndexation: true});
+    });
+  });
+  document.getElementById('reset-btn').addEventListener("click", function(e) {
+    // Reset colors
+    s.graph.nodes().forEach(function(node) {
+      node.color = s.settings.defaultNodeColor;
+    });
+    s.refresh({skipIndexation: true});
+    document.getElementById('levels').innerHTML = '<option disabled selected>Level</option>';
+    louvainInstance = null;
+  });
+}
+society();
+// Returns id value of the clicked node
+s.bind('clickNode',
+function(e)
+{
+  nod = e.data.node;
+  prevNodeId = preNodeId;
+  preNodeId = nod;
+  if (nod.color === 'yellow'){
+    nod.color = s.settings.defaultNodeColor;
+  }
+});
+
+/*function pathy(){
+  var num = 0;
+  var full_path = s.graph.astar(preNodeId.id, prevNodeId.id, {undirected: true});
+  full_path.forEach(function(node){
+    pNode = full_path[num].id;
+    num++;
+    nNode = node;
+    s.graph.adjacentEdges(nNode.id).forEach(
+      function (edge) {
+        if (pNode === edge.target | pNode === edge.source){
+           edge.color = 'yellow';
+        }
+      }
+    );
+    s.refresh();
+    });
+};
+*/
+
+// Returns id value of the clicked edge
+s.bind('clickEdge',
+function(e)
+{
+  edgeId = e.data.edge;
+});
+
+// Resets color of all edges
+function decolor(){
+  s.graph.edges().forEach(function(edge) {
+    edge.color = s.settings.defaultEdgeColor;
+  });
+  s.refresh({skipIndexation: true});
+}
+
+var edge_highlighted = false;
+function toggleEdges(text){
+  if(edge_highlighted === false){
+    text.style.color = '#FFFFFF';
+    edge_highlighted = true;
+    s.settings('drawEdges', false);
+  }
+  else{
+    text.style.color = '#2ecc71';
+    edge_highlighted = false;
+    s.settings('drawEdges', true);
+  }
+s.refresh({skipIndexation: true});
+}
+
+var node_highlighted = false;
+function toggleNodes(text){
+  if(node_highlighted === false){
+    text.style.color = '#FFFFFF';
+    node_highlighted = true;
+    s.settings('drawNodes', false);
+    s.settings('enableNodeHovering', false);
+  }
+  else{
+    text.style.color = '#2ecc71';
+    node_highlighted = false;
+    s.settings('drawNodes', true);
+    s.settings('enableNodeHovering', true);
+  }
+s.refresh({skipIndexation: true});
+}
+
+var edgeLabel_highlighted = false;
+function toggleEdgeLabels(text){
+  if(edgeLabel_highlighted === false){
+    text.style.color = '#FFFFFF';
+    edgeLabel_highlighted = true;
+    s.settings('drawEdgeLables', false);
+  }
+  else{
+    text.style.color = '#2ecc71';
+    edgeLabel_highlighted = false;
+    s.settings('drawEdgeLables', true);
+  }
+s.refresh({skipIndexation: true});
+}
+
+var nodeLabel_highlighted = false;
+function toggleNodeLabels(text){
+  if(nodeLabel_highlighted === false){
+    text.style.color = '#FFFFFF';
+    nodeLabel_highlighted = true;
+    s.settings('drawLabels', false);
+  }
+  else{
+    text.style.color = '#2ecc71';
+    nodeLabel_highlighted = false;
+    s.settings('drawLabels', true);
+  }
+s.refresh({skipIndexation: true});
+}
+
+// Finds stuff
+function finder(){
+  var term = document.getElementById('search').value;;
+  s.graph.nodes().forEach(function(node) {
+    if (node.label === term){
+      node.color = 'yellow';
+    }
+  });
+s.refresh({skipIndexation: true});
+}
+
+// Centers the selected node
+function center(){
+  var node = s.graph.nodes(preNodeId.id);
+  node.x = 0;
+  node.y = 0;
+s.refresh();
+}
+
+function inZoomer(){
+  var c = s.camera;
+  sigma.misc.animation.camera(c, {
+    ratio: c.ratio / c.settings('zoomingRatio')
+  }, {
+    duration: 200
+  });
+}
+
+function outZoomer(){
+  var c = s.camera;
+  sigma.misc.animation.camera(c, {
+    ratio: c.ratio * c.settings('zoomingRatio')
+  }, {
+    duration: 200
+  });
+}
+
+// Stabilizes the sizes of edges and nodes
+function stabilize(){
+  s.graph.nodes().forEach(function(node){
+    if (node.size > 10){
+      node.size = 10;
+    }
+    if (node.size === 0){
+      node.size = 1;
+    }
+  });
+  s.graph.edges().forEach(function(edge){
+    if (edge.size > 10){
+      edge.size = 10;
+    }
+    if (edge.size === 0){
+      edge.size = 1;
+    }
+  });
+s.refresh({skipIndexation: true});
+}
+
+// Removes small nodes as well as edges linked to them
+function clean(){
+  s.graph.nodes().forEach(function(node){
+    if (node.size < 2){
+      s.graph.dropNode(node.id);
+    }
+  });
+s.refresh();
+counter();
+}
+
+// Changes the edge type
+function edgeType(type){
+  s.settings('defaultEdgeType', type);
+s.refresh({skipIndexation: true});
+}
+
+function reloader(){
+  s.graph.clear();
+  s.refresh();
+  plotter();
+}
+
+// Counts nodes and edges
+function counter(){
+  document.getElementById('nodeCounter').innerHTML = 'Nodes: ' + s.graph.nodes().length;
+  document.getElementById('edgeCounter').innerHTML = 'Edges: ' + s.graph.edges().length;
+}
+counter();
+
+// Arranges nodes in a circle
+function circle(){
+  s.graph.nodes().forEach(function(node, i, a) {
+    node.x = Math.cos(Math.PI * 2 * i / a.length);
+    node.y = Math.sin(Math.PI * 2 * i / a.length);
+  });
+s.refresh({skipIndexation: true});
+}
+
+// Deletes right clicked edge from the graph
+s.bind('rightClickEdge',
+function(e) {
+  var dead = e.data.edge.id;
+  s.graph.dropEdge(dead);
+s.refresh({skipIndexation: true});
+counter();
+});
+
+// Deletes right clicked node from the graph
+s.bind('rightClickNode',
+function(e) {
+  var dead = e.data.node.id;
+  s.graph.dropNode(dead);
+s.refresh({skipIndexation: true});
+counter();
+});
+
+// Changes color of a double clicked edge
+s.bind('doubleClickEdge',
+function(e) {
+  var edgeId = e.data.edge.id;
+  var edge = s.graph.edges(edgeId);
+  edge.color = '#2ecc71';
+s.refresh({skipIndexation: true});
+});
+
+// Highlights outgoing edges on double clicking a node
+s.bind('doubleClickNode',
+function(e)
+{
+  var nodx = e.data.node.id;
+  s.graph.adjacentEdges(nodx).forEach(
+    function (ee) {
+      if (ee.color === '#2ecc71' && ee.source === nodx){
+        ee.color = s.settings.defaultNodeColor;
+      }
+      else if (ee.source === nodx){
+        ee.color = '#2ecc71';
+      }
+    }
+  );
+s.refresh({skipIndexation: true});
+});
+
+// Instanciate the ActiveState plugin:
+var activeState = sigma.plugins.activeState(s);
+var keyboard = sigma.plugins.keyboard(s, s.renderers[0]);
+
+// Initialize the Select plugin:
+var select = sigma.plugins.select(s, activeState);
+select.bindKeyboard(keyboard);
+
+// Initialize the dragNodes plugin:
+var dragListener = sigma.plugins.dragNodes(s, s.renderers[0], activeState);
+
+// Initialize the lasso plugin:
+var lasso = new sigma.plugins.lasso(s, s.renderers[0], {
+  'strokeStyle': 'rgb(236, 81, 72)',
+  'lineWidth': 2,
+  'fillWhileDrawing': true,
+  'fillStyle': 'rgba(236, 81, 72, 0.2)',
+  'cursor': 'crosshair'
+});
+
+select.bindLasso(lasso);
+lasso.activate();
+
+// halo on active nodes:
+function renderHalo() {
+  s.renderers[0].halo({
+    nodes: activeState.nodes()
+  });
+}
+
+s.renderers[0].bind('render', function(e) {
+  renderHalo();
+});
+
+lasso.deactivate();
+
+function lassor() {
+  if (lasso.isActive) {
+    lasso.deactivate();
+  } else {
+    lasso.activate();
+  }
+};
+
+// Listen for selectedNodes event
+lasso.bind('selectedNodes', function (event) {
+  setTimeout(function() {
+    lasso.deactivate();
+    s.refresh({skipIndexation: true})({ skipIdexation: true });
+  }, 0);
+});
+</script>
+</body>
+</html>
