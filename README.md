@@ -7,7 +7,7 @@ Quark is a data visualization framework.
 **Quark** is framework built on top of [Linkurious.js](https://github.com/Linkurious/linkurious.js) which lets you painlessly visualize your data in form of nodes & edges. It offers a lot of features out of the box and runs in a browser so you don't need to worry about installing anything or configuring things. Just feed it some data and Quark will plot a beautiful and interactable graph out of it.\
 Here's a screenshot if you are eager to take a look at it:
 
-![Quark UI](https://image.ibb.co/mKnDXT/Screenshot_2018_07_09_13_38_44.png)
+![Quark UI](https://image.ibb.co/ftrKp8/Screenshot_2018_07_09_19_19_11.png)
 
 ### Browser Support
 All modern web browsers are supported, including:
@@ -105,6 +105,42 @@ It lets you select the "aggresivness" to use while coloring the communities.
 
 ##### Reset
 It simply resets the color change made by the cluster option. However it doesn't reset the the position of the nodes i.e. they remain in cluster form.
+
+
+#### How to load a graph?
+##### Scenario 1
+You have 5 points `a, b, c, d, e` and you know the relationships between them like `a` is related to `c`.
+Then create a file with the contents
+```
+a,e
+c,d
+e,a
+d,e
+a,c
+c,e
+```
+Save it with any name and any extenstion and feed it to `quark.py` as follows
+`python3 quark.py <filename>`
+That's it! Open `quark.html` and you will see your graph.
+
+###### Result
+![case 1](https://preview.ibb.co/e4TACT/Screenshot_2018_07_09_19_50_31.png)
+
+Why are the nodes so small? Because in this *automatic mode*, the size of a node is determined by how many other nodes are connected to. For any noticable variation in node size, your graph should have enough nodes i.e. larger than 20.
+
+##### Scenario 2
+If you are like me and you want full control of everything like the co-ordinates and size of nodes, edge thickness and their lables etc. then you will need to arrange this information in JSON syntax as follows:
+```
+{
+"nodes": [{"label": "a", "x": 1, "y": 1, "id": "node1", "size":10}, {"label": "b", "x": 2, "y": 1, "id": "node2", "size":4}],
+"edges": [{"source":"node1", "target":"node2", "id":"edge1", "size":2}]
+}
+```
+Save it with any name and again, pass it to the handler and open quark.html
+
+###### Result
+
+![case 2](https://image.ibb.co/cEUYXT/Screenshot_2018_07_09_19_46_35.png)
 
 ### Performance
 Quark is tested and built on a spaghetti laptop with just 3GB RAM, built-in graphic card & i3 processor. On this configuration, a graph with 7000 nodes & 3000 edges was rendering just fine.\
