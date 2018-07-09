@@ -1,10 +1,10 @@
-<html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
 <title id="filename">Quark</title>
 </head>
+<body>
+
 <script src="./libs/sigma.core.js"></script>
 <script src="./libs/conrad.js"></script>
 <script src="./libs/sigma.utils.js"></script>
@@ -44,18 +44,14 @@
 <script src="./libs/sigma.misc.bindEvents.js"></script>
 <script src="./libs/sigma.misc.bindDOMEvents.js"></script>
 <script src="./libs/sigma.misc.drawHovers.js"></script>
-<!-- END SIGMA IMPORTS -->
 <script src="./libs/plugins/sigma.renderers.halo/settings.js"></script>
 <script src="./libs/plugins/sigma.renderers.halo/sigma.renderers.halo.js"></script>
-
 <script src="./libs/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
-
 <script src="./libs/plugins/sigma.helpers.graph/sigma.helpers.graph.js"></script>
 <script src="./libs/plugins/sigma.plugins.keyboard/sigma.plugins.keyboard.js"></script>
 <script src="./libs/plugins/sigma.plugins.activeState/sigma.plugins.activeState.js"></script>
 <script src="./libs/plugins/sigma.plugins.select/sigma.plugins.select.js"></script>
 <script src="./libs/plugins/sigma.plugins.lasso/sigma.plugins.lasso.js"></script>
-
 <script src="./libs/plugins/sigma.renderers.linkurious/settings.js"></script>
 <script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.labels.def.js"></script>
 <script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.hovers.def.js"></script>
@@ -69,14 +65,10 @@
 <script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.curve.js"></script>
 <script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.arrow.js"></script>
 <script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.curvedArrow.js"></script>
-<script src="./libs/plugins/sigma.pathfinding.astar/sigma.pathfinding.astar.js"></script>
-<script src="./libs/plugins/sigma.renderers.halo/settings.js"></script>
-<script src="./libs/plugins/sigma.renderers.halo/sigma.renderers.halo.js"></script>
 <script src="./libs/plugins/sigma.plugins.animate/sigma.plugins.animate.js"></script>
 <script src="./libs/plugins/sigma.layout.forceLink/worker.js"></script>
 <script src="./libs/plugins/sigma.layout.forceLink/supervisor.js"></script>
 <script src="./libs/plugins/sigma.statistics.louvain/sigma.statistics.louvain.js"></script>
-<script id="ourfile" src="1P9e1P555Qj6BKRK4tmZqjAZsUxWMa4qUQ.js"></script>
 <div id="container">
   <style>
     #graph-container {
@@ -95,7 +87,6 @@
       filter: drop-shadow(1px 1px 11px #c0392b);
       top: 0px;
       bottom: 0px;
-      right: 0px;
       width: 160px;
       background-color: #34495e;
       overflow: auto;
@@ -126,8 +117,6 @@
       display: inline-block;
       padding: 5px;
       filter: drop-shadow(2px 2px 2px #c0392b);
-      transform: rotate(90deg);
-      -webkit-transform: rotate(90deg);
   }
   .toggle {
   font-size: 10px;
@@ -151,51 +140,71 @@
       flex: 1;
   }
   </style>
-<body>
-  <div id="graph-container"></div>
-  <i class="arrow" onclick="sidebarToggle();" style="z-index: 1; position: absolute; right: 0px; top: 0px;"></i>
-  <div id="control-panel">
+
+<div id="graph-container"></div>
+  <i class="arrow" onclick="sidebarToggle1();" style="cursor: pointer; transform: rotate(90deg);-webkit-transform: rotate(90deg);z-index: 1; position: absolute; right: 0px; top: 0px;"></i>
+  <div style="right: 0px" id="control-panel" name="control-panel-1">
     <div id="holder">
       <center>
-        <d3v class="glow" onclick="circle()">Circle</d3v>
-        <d3v class="glow" onclick="decolor()">Decolor</d3v>
+        <div style="text-align: left">
+        <d3v class="glow" style="padding-right: 30px" onclick="circle()">Circle</d3v>
         <d3v class="glow" onclick="center()">Center</d3v>
-        <d3v class="glow" onclick="stabilize()">Stabilize</d3v>
-        <d3v class="glow" onclick="clean()">Clean</d3v>
+        <d3v class="glow" style="padding-right: 24px" onclick="decolor()">Decolor</d3v>
         <d3v class="glow" onclick="lassor()">Lasso</d3v>
-        <d3v class="glow" onclick="reloader();">Reload</d3v>
+        <d3v class="glow" style="padding-right: 20px" onclick="stabilize()">Stabilize</d3v>
+        <d3v class="glow" onclick="clean()">Clean</d3v>
+        <d3v class="glow" onclick="deleter()">Delete</d3v>
+        </div>
+        <hr>
         <select onchange="edgeType(this.value)">
-          <option value="line">Line</option>
+          <option value="line" selected="selected">Line</option>
           <option value="curve">Curve</option>
           <option value="arrow">Arrow</option>
           <option value="curvedArrow">cArrow</option>
         </select>
-        <hr />
-        <span onclick="toggleEdges(this)" class="glow" style="color: #2ecc71" id="edgeCounter">Edges: </span><br />
+        <span onclick="toggleEdges(this)" class="glow" style="color: #2ecc71" id="edgeCounter">Edges: </span><br>
         <span onclick="toggleNodes(this)" class="glow" style="color: #2ecc71" id="nodeCounter">Nodes: </span>
-        <span onclick="toggleEdgeLabels(this)" class="glow" style="color: #2ecc71" id="edgeCounter">Edge Lables</span><br />
+        <span onclick="toggleEdgeLabels(this)" class="glow" style="color: #2ecc71" id="edgeCounter">Edge Lables</span><br>
         <span onclick="toggleNodeLabels(this)" class="glow" style="color: #2ecc71" id="nodeCounter">Node Labels</span>
-        <div class="flexContainer">
-          <input class="inputField" type="text" size="5" id="search" value="">
-          <input type="button" style="color: white; border:1px solid #e74c3c; background-color: #e74c3c;" value="Find" onclick="finder(this.value);">
+        <input id="favcolor" value="#e74c3c" type="color"><input style="color: white; border:1px solid #e74c3c; background-color: #e74c3c; padding-top: 3px; padding-bottom: 1px" value="Color" onclick="artist();" type="button">
+        <div style="padding-top: 10px" class="flexContainer">
+          <input class="inputField" size="5" id="search" type="text">
+          <input style="color: white; border:1px solid #e74c3c; background-color: #e74c3c;" value="Find" onclick="finder(this.value);" type="button">
         </div>
-        <hr />
-        <span class="glow" id="run-btn">Find Communities</span><br />
-        <select id="levels"><option disabled selected>Level</option></select><span class="glow" id="reset-btn">Reset</span>
+        <hr>
+        <span onclick="society()" class="glow" id="run-btn">Make Clusters</span><br>
+        <select id="levels"><option disabled="disabled" selected="selected">Level</option></select><span class="glow" id="reset-btn">Reset</span>
+      </center>
+    </div>
+  </div>
+<i class="arrow" onclick="sidebarToggle2();" style="cursor: pointer;z-index: 1; position: absolute; left: 0px; top: 0px;"></i>
+  <div style="left: 0px; display: none;" id="control-panel" name="control-panel-2">
+    <div id="holder">
+      <center>
       </center>
     </div>
   </div>
 </div>
 <span style="visibility: hidden;" id="secret" value="50"></span>
 <script>
-function sidebarToggle() {
-    var x = document.getElementById("control-panel");
+function sidebarToggle1() {
+    var x = document.getElementsByName("control-panel-1")[0];
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {
         x.style.display = "none";
     }
 }
+function sidebarToggle2() {
+    var x = document.getElementsByName("control-panel-2")[0];
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+var x = document.getElementsByName("control-panel-2")[0];
+x.style.display = "none";
 </script>
 
 <script>
@@ -269,10 +278,10 @@ default_settings = {
       nodeHaloColor: 'rgba(241, 196, 15, 0.2)'
     }
 
-/*if (rendri.edges.length > 8000){
+if (rendri.edges.length > 8000){
   if (confirm('Number of edges is ' + rendri.edges.length + ' which may cause the canvas to lag.\nWould you like to use "webgl" instead?'));
   defaults.type = 'webgl';
-}*/
+}
 
 if (!('size' in rendri.nodes[0])){
   default_settings.autoRescale.push('nodeSize');
@@ -297,6 +306,7 @@ function society(){
   });
   sigma.layouts.startForceLink();
   var louvainInstance;
+  document.getElementById('run-btn').innerHTML = 'Color Clusters';
   // Detect button
   document.getElementById('run-btn').addEventListener("click", function(e) {
     // Detect communities using the Louvain algorithm:
@@ -343,7 +353,7 @@ function society(){
     louvainInstance = null;
   });
 }
-society();
+
 // Returns id value of the clicked node
 s.bind('clickNode',
 function(e)
@@ -356,25 +366,6 @@ function(e)
   }
 });
 
-/*function pathy(){
-  var num = 0;
-  var full_path = s.graph.astar(preNodeId.id, prevNodeId.id, {undirected: true});
-  full_path.forEach(function(node){
-    pNode = full_path[num].id;
-    num++;
-    nNode = node;
-    s.graph.adjacentEdges(nNode.id).forEach(
-      function (edge) {
-        if (pNode === edge.target | pNode === edge.source){
-           edge.color = 'yellow';
-        }
-      }
-    );
-    s.refresh();
-    });
-};
-*/
-
 // Returns id value of the clicked edge
 s.bind('clickEdge',
 function(e)
@@ -386,6 +377,9 @@ function(e)
 function decolor(){
   s.graph.edges().forEach(function(edge) {
     edge.color = s.settings.defaultEdgeColor;
+  });
+  s.graph.nodes().forEach(function(node) {
+    node.color = s.settings.defaultNodeColor;
   });
   s.refresh({skipIndexation: true});
 }
@@ -456,8 +450,12 @@ s.refresh({skipIndexation: true});
 function finder(){
   var term = document.getElementById('search').value;;
   s.graph.nodes().forEach(function(node) {
-    if (node.label === term){
+    var stop = true;
+    if (node.id === term | node.label === term){
       node.color = 'yellow';
+      if (stop){
+        return;
+      }
     }
   });
 s.refresh({skipIndexation: true});
@@ -529,8 +527,8 @@ s.refresh({skipIndexation: true});
 
 function reloader(){
   s.graph.clear();
-  s.refresh();
   plotter();
+  s.refresh();
 }
 
 // Counts nodes and edges
@@ -546,7 +544,7 @@ function circle(){
     node.x = Math.cos(Math.PI * 2 * i / a.length);
     node.y = Math.sin(Math.PI * 2 * i / a.length);
   });
-s.refresh({skipIndexation: true});
+s.refresh();
 }
 
 // Deletes right clicked edge from the graph
@@ -560,24 +558,6 @@ counter();
 
 // Deletes right clicked node from the graph
 s.bind('rightClickNode',
-function(e) {
-  var dead = e.data.node.id;
-  s.graph.dropNode(dead);
-s.refresh({skipIndexation: true});
-counter();
-});
-
-// Changes color of a double clicked edge
-s.bind('doubleClickEdge',
-function(e) {
-  var edgeId = e.data.edge.id;
-  var edge = s.graph.edges(edgeId);
-  edge.color = '#2ecc71';
-s.refresh({skipIndexation: true});
-});
-
-// Highlights outgoing edges on double clicking a node
-s.bind('doubleClickNode',
 function(e)
 {
   var nodx = e.data.node.id;
@@ -591,6 +571,16 @@ function(e)
       }
     }
   );
+s.refresh({skipIndexation: true});
+});
+
+
+// Changes color of a double clicked edge
+s.bind('doubleClickEdge',
+function(e) {
+  var edgeId = e.data.edge.id;
+  var edge = s.graph.edges(edgeId);
+  edge.color = '#2ecc71';
 s.refresh({skipIndexation: true});
 });
 
@@ -642,9 +632,34 @@ function lassor() {
 lasso.bind('selectedNodes', function (event) {
   setTimeout(function() {
     lasso.deactivate();
-    s.refresh({skipIndexation: true})({ skipIdexation: true });
+    s.refresh({skipIndexation: true});
   }, 0);
 });
+
+function deleter(){
+  if (!(activeState.nodes() == null)){
+    activeState.nodes().forEach(function(node) {
+      s.graph.dropNode(node.id);
+    });
+  }
+  else{
+    s.graph.dropNode(preNodeId.id);
+  }
+s.refresh();
+}
+function artist(){
+  var art = document.getElementById('favcolor').value;
+  if (!(activeState.nodes() == null)){
+    activeState.nodes().forEach(function(node) {
+      s.graph.nodes(node.id).color = art;
+    });
+  }
+  else{
+    s.graph.nodes(preNodeId.id).color = art;
+  }
+s.refresh({skipIndexation: true});
+}
+
 </script>
-</body>
-</html>
+
+</body></html>
