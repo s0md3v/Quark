@@ -4,7 +4,7 @@
 <title id="filename">Quark</title>
 </head>
 <body>
-
+<script id="ourfile" src="alpha.json.js"></script>
 <script src="./libs/sigma.core.js"></script>
 <script src="./libs/conrad.js"></script>
 <script src="./libs/sigma.utils.js"></script>
@@ -65,6 +65,7 @@
 <script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.curve.js"></script>
 <script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.arrow.js"></script>
 <script src="./libs/plugins/sigma.renderers.linkurious/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+<script src="./libs/sigma.exporters.json.js"></script>
 <script src="./libs/plugins/sigma.plugins.animate/sigma.plugins.animate.js"></script>
 <script src="./libs/plugins/sigma.layout.forceLink/worker.js"></script>
 <script src="./libs/plugins/sigma.layout.forceLink/supervisor.js"></script>
@@ -174,13 +175,8 @@
         <hr>
         <span onclick="society()" class="glow" id="run-btn">Make Clusters</span><br>
         <select id="levels"><option disabled="disabled" selected="selected">Level</option></select><span class="glow" id="reset-btn">Reset</span>
-      </center>
-    </div>
-  </div>
-<i class="arrow" onclick="sidebarToggle2();" style="cursor: pointer;z-index: 1; position: absolute; left: 0px; top: 0px;"></i>
-  <div style="left: 0px; display: none;" id="control-panel" name="control-panel-2">
-    <div id="holder">
-      <center>
+        <hr />
+        <d3v class="glow" onclick="json_export()">Export as JSON</d3v>
       </center>
     </div>
   </div>
@@ -195,16 +191,6 @@ function sidebarToggle1() {
         x.style.display = "none";
     }
 }
-function sidebarToggle2() {
-    var x = document.getElementsByName("control-panel-2")[0];
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
-var x = document.getElementsByName("control-panel-2")[0];
-x.style.display = "none";
 </script>
 
 <script>
@@ -647,6 +633,7 @@ function deleter(){
   }
 s.refresh();
 }
+
 function artist(){
   var art = document.getElementById('favcolor').value;
   if (!(activeState.nodes() == null)){
@@ -660,6 +647,15 @@ function artist(){
 s.refresh({skipIndexation: true});
 }
 
-</script>
+function json_export(){
+  s.toJSON({
+  download: true,
+  filename: 'myGraph.json'
+  });
+}
+function png_export(){
 
-</body></html>
+}
+</script>
+</body>
+</html>
