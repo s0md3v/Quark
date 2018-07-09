@@ -106,6 +106,9 @@ It lets you select the "aggressiveness" to use while coloring the communities. L
 ##### Reset
 It simply resets the color change made by the cluster option. However it doesn't reset the the position of the nodes i.e. they remain in cluster form.
 
+------
+##### Export to JSON
+As the name suggests, it lets you export your current graph to a JSON file.
 
 #### How to load a graph?
 ##### Scenario 1
@@ -148,7 +151,7 @@ A computer with better specifications will be able to handle more data smoothly.
 `webgl` uses your GPU to render graphs which boosts the performance but it doesn't support interaction events.
 Quark uses `canvas` renderer by default.
 
-Tips:
+**Tips:**
 - Edges consume more memory than nodes.
 - Memory caused by edge styles: `line < curve < arrow < curved arrow`
 - Delete the nodes which seem insignificant to you.
