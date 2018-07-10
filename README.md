@@ -111,6 +111,9 @@ It simply resets the color change made by the cluster option. However it doesn't
 As the name suggests, it lets you export your current graph to a JSON file.
 
 #### How to load a graph?
+
+Before reading any further, take a look at my [Orbit](https://github.com/s0md3v/Orbit) which uses Quark to analyse crypto wallet relationships.
+
 ##### Scenario 1
 You have 5 points `a, b, c, d, e` and you know the relationships between them like `a` is related to `c`.
 Then create a file with the contents
