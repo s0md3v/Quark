@@ -97,7 +97,7 @@ Enter full label/id of a node and it will find and highlight it. Default color i
 ------
 
 ##### Make/Color Clusters
-It helps you fine & color nodes that are more densely connected together than to the rest of the network.
+It helps you find & color nodes that are more densely connected together than to the rest of the network.
 ![Cluster demo](https://preview.ibb.co/fXPfwo/Screenshot_2018_07_09_14_36_21.png)
 
 ##### Level (Dropdown)
