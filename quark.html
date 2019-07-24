@@ -4,7 +4,7 @@
 <title id="filename">Quark</title>
 </head>
 <body>
-<script id="ourfile" src="alpha.json.js"></script>
+<script id="ourfile" src="data.json.js"></script>
 <script src="./libs/sigma.core.js"></script>
 <script src="./libs/conrad.js"></script>
 <script src="./libs/sigma.utils.js"></script>
@@ -68,6 +68,7 @@
 <script src="./libs/sigma.exporters.json.js"></script>
 <script src="./libs/plugins/sigma.plugins.animate/sigma.plugins.animate.js"></script>
 <script src="./libs/plugins/sigma.layout.forceLink/worker.js"></script>
+<script src="./libs/plugins/sigma.layout.noverlap/sigma.layout.noverlap.js"></script>
 <script src="./libs/plugins/sigma.layout.forceLink/supervisor.js"></script>
 <script src="./libs/plugins/sigma.statistics.louvain/sigma.statistics.louvain.js"></script>
 <div id="container">
@@ -154,7 +155,8 @@
         <d3v class="glow" onclick="lassor()">Lasso</d3v>
         <d3v class="glow" style="padding-right: 20px" onclick="stabilize()">Stabilize</d3v>
         <d3v class="glow" onclick="clean()">Clean</d3v>
-        <d3v class="glow" onclick="deleter()">Delete</d3v>
+        <d3v class="glow" style="padding-right: 20px" onclick="deleter()">Delete</d3v>
+        <d3v class="glow" onclick="spacify()">Spacify</d3v>
         </div>
         <hr>
         <select onchange="edgeType(this.value)">
@@ -251,6 +253,7 @@ default_settings = {
       drawEdgeLabels: false,
       approximateLabelWidth: true,
       edgeColor: 'default',
+      scalingMode : 'outside',
       labelAlignment: 'top',
       defaultLabelColor: '#e74c3c',
       defaultEdgeColor: '#FFFFFF',
@@ -282,6 +285,16 @@ function plotter() {
 }
 plotter();
 
+function spacify(){
+  var listener = s.configNoverlap({nodes:s.nodes, nodeMargin:10});
+  listener.bind('start stop interpolate', function(event) {
+    console.log(event.type);
+  });
+  // Start the algorithm:
+  s.startNoverlap();
+  s.refresh();
+}
+
 function society(){
   // Layout the graph to see node clusters:
   var fa = sigma.layouts.configForceLink(s, {
@@ -305,7 +318,6 @@ function society(){
     s.graph.nodes().forEach(function(node) {
       node.color = colors[node.my_community];
     });
-    s.refresh({skipIndexation: true});
     // Fill level selector
     var levelElt = document.getElementById('levels');
     levelElt.innerHTML = '<option disabled selected>Level</option>';
@@ -326,7 +338,6 @@ function society(){
       s.graph.nodes().forEach(function(node) {
         node.color = colors[node.my_community];
       });
-      s.refresh({skipIndexation: true});
     });
   });
   document.getElementById('reset-btn').addEventListener("click", function(e) {
@@ -334,7 +345,6 @@ function society(){
     s.graph.nodes().forEach(function(node) {
       node.color = s.settings.defaultNodeColor;
     });
-    s.refresh({skipIndexation: true});
     document.getElementById('levels').innerHTML = '<option disabled selected>Level</option>';
     louvainInstance = null;
   });
@@ -532,15 +542,6 @@ function circle(){
   });
 s.refresh();
 }
-
-// Deletes right clicked edge from the graph
-s.bind('rightClickEdge',
-function(e) {
-  var dead = e.data.edge.id;
-  s.graph.dropEdge(dead);
-s.refresh({skipIndexation: true});
-counter();
-});
 
 // Deletes right clicked node from the graph
 s.bind('rightClickNode',
