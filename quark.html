@@ -167,8 +167,8 @@
         </select>
         <span onclick="toggleEdges(this)" class="glow" style="color: #2ecc71" id="edgeCounter">Edges: </span><br>
         <span onclick="toggleNodes(this)" class="glow" style="color: #2ecc71" id="nodeCounter">Nodes: </span>
-        <span onclick="toggleEdgeLabels(this)" class="glow" style="color: #2ecc71" id="edgeCounter">Edge Lables</span><br>
-        <span onclick="toggleNodeLabels(this)" class="glow" style="color: #2ecc71" id="nodeCounter">Node Labels</span>
+        <span onclick="toggleEdgeLabels(this)" class="glow" style="color: #FFFFFF" id="edgeCounter">Edge Lables</span><br>
+        <span onclick="toggleNodeLabels(this)" class="glow" style="color: #FFFFFF" id="nodeCounter">Node Labels</span>
         <input id="favcolor" value="#e74c3c" type="color"><input style="color: white; border:1px solid #e74c3c; background-color: #e74c3c; padding-top: 3px; padding-bottom: 1px" value="Color" onclick="artist();" type="button">
         <div style="padding-top: 10px" class="flexContainer">
           <input class="inputField" size="5" id="search" type="text">
@@ -244,8 +244,8 @@ default_settings = {
       borderSize: 2,
       outerBorderSize: 3,
       edgeHoverSizeRatio: 1,
-      drawLabels: true,
-      drawEdgeLables: true,
+      drawLabels: false,
+      drawEdgeLables: false,
       edgeHoverExtremities: false,
       drawEdges: true,
       enableNodeHovering: true,
@@ -412,7 +412,7 @@ function toggleNodes(text){
 s.refresh({skipIndexation: true});
 }
 
-var edgeLabel_highlighted = false;
+var edgeLabel_highlighted = true;
 function toggleEdgeLabels(text){
   if(edgeLabel_highlighted === false){
     text.style.color = '#FFFFFF';
@@ -427,7 +427,7 @@ function toggleEdgeLabels(text){
 s.refresh({skipIndexation: true});
 }
 
-var nodeLabel_highlighted = false;
+var nodeLabel_highlighted = true;
 function toggleNodeLabels(text){
   if(nodeLabel_highlighted === false){
     text.style.color = '#FFFFFF';
