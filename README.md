@@ -1,8 +1,3 @@
-# Quark
-Quark is a data visualization framework.
-
-![Quark Logo](https://image.ibb.co/evD5cT/Screenshot_2018_07_08_00_58_59_small.png)
-
 ## Introduction
 **Quark** is framework built on top of [Linkurious.js](https://github.com/Linkurious/linkurious.js) which lets you painlessly visualize your data in form of nodes & edges. It offers a lot of features out of the box and runs in a browser so you don't need to worry about installing anything or configuring things. Just feed it some data and Quark will plot a beautiful and intractable graph out of it.\
 Here's a screenshot if you are eager to take a look at it:
